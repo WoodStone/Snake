@@ -11,6 +11,7 @@ public class DesktopLauncher {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
     config.width = Reference.WIDTH;
     config.height = Reference.HEIGHT;
+    config.samples = 0;
     new LwjglApplication(new Snake(), config);
   }
 

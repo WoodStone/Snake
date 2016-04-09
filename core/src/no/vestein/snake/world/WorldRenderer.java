@@ -1,9 +1,10 @@
-package no.vestein.snake;
+package no.vestein.snake.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
+import no.vestein.snake.Reference;
 
 /**
  * Created by Vestein on 12.03.2016.
@@ -46,6 +47,7 @@ public class WorldRenderer implements Disposable {
     for (Sprite sprite : worldController.getSprites()) {
       sprite.draw(batch);
     }
+    worldController.grid.draw(batch);
     batch.end();
   }
 

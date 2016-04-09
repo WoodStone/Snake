@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Vestein on 12.03.2016.
  */
-public class CameraHelper {
+public class CameraHelper implements Updatable {
 
   private static final String TAG = CameraHelper.class.getName();
 

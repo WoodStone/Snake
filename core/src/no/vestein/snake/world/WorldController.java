@@ -1,4 +1,4 @@
-package no.vestein.snake;
+package no.vestein.snake.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,16 +7,21 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import no.vestein.snake.CameraHelper;
+import no.vestein.snake.Grid;
+import no.vestein.snake.Reference;
+import no.vestein.snake.Updatable;
 
 /**
  * Created by Vestein on 12.03.2016.
  */
-public class WorldController extends InputAdapter {
+public class WorldController extends InputAdapter implements Updatable {
 
   private static final String TAG = WorldController.class.getName();
   private Sprite[] sprites;
   private int selectedSprite;
   public CameraHelper cameraHelper;
+  public Grid grid;
 
   public WorldController() {
     init();
@@ -25,6 +30,8 @@ public class WorldController extends InputAdapter {
   private void init() {
     Gdx.input.setInputProcessor(this);
     cameraHelper = new CameraHelper();
+    cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
+    grid = new Grid();
     initObjects();
   }
 
@@ -77,10 +84,12 @@ public class WorldController extends InputAdapter {
   private void initObjects() {
     sprites = new Sprite[5];
 
-    final int widht = 32;
-    final int height = 32;
-    Pixmap pixmap = createProceduralPixmap(widht, height);
-    Texture texture = new Texture(pixmap);
+    final int width = 64;
+    final int height = 64;
+    Pixmap pixmap = createProceduralPixmap(width, height);
+    Texture texture = new Texture(pixmap, true);
+    texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+    //texture.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.MipMapLinearLinear);
 
     for (int i = 0; i < sprites.length; i++) {
       Sprite sprite = new Sprite(texture);
