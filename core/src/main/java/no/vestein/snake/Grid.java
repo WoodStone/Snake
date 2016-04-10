@@ -19,6 +19,10 @@ public class Grid extends Sprite {
     setPosition(Reference.VIEWPORT_WIDTH  / 2.0f, Reference.VIEWPORT_HEIGHT / 2.0f);
   }
 
+  public boolean someMethod() {
+    return true;
+  }
+
   private static Texture texture() {
     Pixmap pixmap = createPixmap(512, 512);
     Texture texture = new Texture(pixmap, true);
