@@ -6,9 +6,9 @@ gwt {
     maxHeapSize="1G" // Default 256m is not enough for gwt compiler. GWT is HUNGRY
     minHeapSize="1G"
 
-    src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'no.vestein.no.vestein.snake.GdxDefinition'
-    devModules 'no.vestein.no.vestein.snake.GdxDefinitionSuperdev'
+    src = files(file("src/main/java/")) // Needs to be in front of "modules" below.
+    modules 'no.vestein.snake.GdxDefinition'
+    devModules 'no.vestein.snake.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {
@@ -62,7 +62,7 @@ tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 
 sourceCompatibility = 1.8
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 
 eclipse.project {
