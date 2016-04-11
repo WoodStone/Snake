@@ -8,23 +8,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 /**
  * Created by Vestein on 13.03.2016.
  */
-public class Grid extends Sprite {
+public class GridSprite extends Sprite {
 
   private static final String TAG = Sprite.class.getName();
 
-  public Grid() {
+  public GridSprite() {
     super(texture());
     setSize(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
+    setScale(0.8f);
     setOrigin(getWidth() / 2.0f, getHeight() / 2.0f);
-    setPosition(Reference.VIEWPORT_WIDTH  / 2.0f, Reference.VIEWPORT_HEIGHT / 2.0f);
-  }
-
-  public boolean someMethod() {
-    return true;
+//    setPosition(Reference.VIEWPORT_WIDTH / 2.0f, Reference.VIEWPORT_HEIGHT / 2.0f);
+    setPosition(Reference.VIEWPORT_WIDTH - getWidth() / 2.0f, Reference.VIEWPORT_HEIGHT - getHeight() / 2.0f);
   }
 
   private static Texture texture() {
-    Pixmap pixmap = createPixmap(512, 512);
+    Pixmap pixmap = createPixmap(544, 544);
     Texture texture = new Texture(pixmap, true);
     texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
@@ -47,6 +45,9 @@ public class Grid extends Sprite {
     }
 
     pixmap.drawRectangle(0, 0, width, height);
+
+    pixmap.setColor(1.0f, 0f, 0f, 0.5f);
+    pixmap.fillCircle(width / 2, height / 2, 16);
 
     return pixmap;
   }

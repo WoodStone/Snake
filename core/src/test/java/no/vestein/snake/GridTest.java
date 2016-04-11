@@ -1,20 +1,15 @@
 package no.vestein.snake;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.headless.HeadlessApplication;
-import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Vestein on 10.04.2016.
  */
 public class GridTest {
 
-  private Grid grid;
+  private GridSprite grid;
 
   @Before
   public void setUp() throws Exception {
@@ -24,7 +19,7 @@ public class GridTest {
 //    Gdx.app.postRunnable(new Runnable() {
 //      @Override
 //      public void run() {
-//        grid = new Grid();
+//        grid = new GridSprite();
 //      }
 //    });
 //    while (grid == null) {

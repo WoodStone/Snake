@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import no.vestein.snake.CameraHelper;
-import no.vestein.snake.Grid;
-import no.vestein.snake.Reference;
-import no.vestein.snake.Updatable;
+import no.vestein.snake.*;
 
 /**
  * Created by Vestein on 12.03.2016.
@@ -21,7 +18,8 @@ public class WorldController extends InputAdapter implements Updatable {
   private Sprite[] sprites;
   private int selectedSprite;
   public CameraHelper cameraHelper;
-  public Grid grid;
+  public GridSprite grid;
+  public SnakeSprite snakeSprite;
 
   public WorldController() {
     init();
@@ -31,7 +29,9 @@ public class WorldController extends InputAdapter implements Updatable {
     Gdx.input.setInputProcessor(this);
     cameraHelper = new CameraHelper();
     cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
-    grid = new Grid();
+    grid = new GridSprite();
+    snakeSprite = new SnakeSprite();
+    snakeSprite.setPosition(Reference.VIEWPORT_WIDTH - snakeSprite.getWidth() / 2.0f, Reference.VIEWPORT_HEIGHT - snakeSprite.getHeight() / 2.0f);
     initObjects();
   }
 
@@ -57,24 +57,32 @@ public class WorldController extends InputAdapter implements Updatable {
     } else if (keycode == Input.Keys.ENTER) {
       cameraHelper.setTarget(cameraHelper.hastarget() ? null : sprites[selectedSprite]);
       Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hastarget());
+    } else if (keycode == Input.Keys.A) {
+      snakeSprite.translateX(-snakeSprite.getWidth() * 0.8f);
+    } else if (keycode == Input.Keys.D) {
+      snakeSprite.translateX(snakeSprite.getWidth() * 0.8f);
+    } else if (keycode == Input.Keys.W) {
+      snakeSprite.translateY(snakeSprite.getHeight() * 0.8f);
+    } else if (keycode == Input.Keys.S) {
+      snakeSprite.translateY(-snakeSprite.getHeight() * 0.8f);
     }
     return false;
   }
 
   private void handleInput(final float deltaTime) {
-    final float moveSpeed = 5 * deltaTime;
-    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-      moveSelectedSprite(-moveSpeed, 0);
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-      moveSelectedSprite(moveSpeed, 0);
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-      moveSelectedSprite(0, moveSpeed);
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-      moveSelectedSprite(0, -moveSpeed);
-    }
+//    final float moveSpeed = 5 * deltaTime;
+//    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+//      moveSelectedSprite(-moveSpeed, 0);
+//    }
+//    if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+//      moveSelectedSprite(moveSpeed, 0);
+//    }
+//    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+//      moveSelectedSprite(0, moveSpeed);
+//    }
+//    if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+//      moveSelectedSprite(0, -moveSpeed);
+//    }
   }
 
   private void moveSelectedSprite(final float x, final float y) {

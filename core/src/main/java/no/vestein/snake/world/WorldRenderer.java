@@ -48,6 +48,7 @@ public class WorldRenderer implements Disposable {
       sprite.draw(batch);
     }
     worldController.grid.draw(batch);
+    worldController.snakeSprite.draw(batch);
     batch.end();
   }
 
