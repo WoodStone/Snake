@@ -1,5 +1,6 @@
 package no.vestein.snake;
 
+import no.vestein.snake.graphics.GridSprite;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;

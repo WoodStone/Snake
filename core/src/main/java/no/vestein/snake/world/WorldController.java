@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import no.vestein.snake.*;
+import no.vestein.snake.graphics.GridSprite;
+import no.vestein.snake.graphics.SnakeSprite;
 
 /**
  * Created by Vestein on 12.03.2016.
@@ -18,8 +20,9 @@ public class WorldController extends InputAdapter implements Updatable {
   private Sprite[] sprites;
   private int selectedSprite;
   public CameraHelper cameraHelper;
-  public GridSprite grid;
+  public GridSprite gridSprite;
   public SnakeSprite snakeSprite;
+  public Grid grid;
 
   public WorldController() {
     init();
@@ -29,9 +32,15 @@ public class WorldController extends InputAdapter implements Updatable {
     Gdx.input.setInputProcessor(this);
     cameraHelper = new CameraHelper();
     cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
-    grid = new GridSprite();
+    cameraHelper.setZoom(1.2f);
+    gridSprite = new GridSprite();
     snakeSprite = new SnakeSprite();
-    snakeSprite.setPosition(Reference.VIEWPORT_WIDTH - snakeSprite.getWidth() / 2.0f, Reference.VIEWPORT_HEIGHT - snakeSprite.getHeight() / 2.0f);
+    grid = new Grid(17, gridSprite);
+
+    grid.addSprite("snake", snakeSprite);
+    grid.moveSpriteToOrigin("snake");
+
+//    snakeSprite.setPosition(Reference.VIEWPORT_WIDTH - snakeSprite.getWidth() / 2.0f, Reference.VIEWPORT_HEIGHT - snakeSprite.getHeight() / 2.0f);
     initObjects();
   }
 
@@ -47,24 +56,28 @@ public class WorldController extends InputAdapter implements Updatable {
       init();
       Gdx.app.debug(TAG, "Game world resetted.");
     } else if (keycode == Input.Keys.SPACE) {
-      selectedSprite = (selectedSprite + 1) % sprites.length;
-
-      if (cameraHelper.hastarget()) {
-        cameraHelper.setTarget(sprites[selectedSprite]);
-      }
-
-      Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
+//      selectedSprite = (selectedSprite + 1) % sprites.length;
+//
+//      if (cameraHelper.hastarget()) {
+//        cameraHelper.setTarget(sprites[selectedSprite]);
+//      }
+//
+//      Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
+      Gdx.app.debug(TAG, snakeSprite.getX() + ":" + snakeSprite.getY());
     } else if (keycode == Input.Keys.ENTER) {
-      cameraHelper.setTarget(cameraHelper.hastarget() ? null : sprites[selectedSprite]);
-      Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hastarget());
+//      cameraHelper.setTarget(cameraHelper.hastarget() ? null : sprites[selectedSprite]);
+//      Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hastarget());
+      Gdx.app.debug(TAG, snakeSprite.getWidth() + ".." + snakeSprite.getHeight());
     } else if (keycode == Input.Keys.A) {
-      snakeSprite.translateX(-snakeSprite.getWidth() * 0.8f);
+//      snakeSprite.translateX(-snakeSprite.getWidth());
+//      snakeSprite.setX(snakeSprite.getX() - 32.0f / 17.0f);
+      grid.moveSpriteLeft("snake");
     } else if (keycode == Input.Keys.D) {
-      snakeSprite.translateX(snakeSprite.getWidth() * 0.8f);
+      grid.moveSpriteRight("snake");
     } else if (keycode == Input.Keys.W) {
-      snakeSprite.translateY(snakeSprite.getHeight() * 0.8f);
+      grid.moveSpriteUp("snake");
     } else if (keycode == Input.Keys.S) {
-      snakeSprite.translateY(-snakeSprite.getHeight() * 0.8f);
+      grid.moveSpriteDown("snake");
     }
     return false;
   }

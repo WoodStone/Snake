@@ -1,8 +1,8 @@
-package no.vestein.snake;
+package no.vestein.snake.graphics;
 
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import no.vestein.snake.Reference;
 
 /**
  * Created by Vestein on 11.04.2016.
@@ -13,11 +13,8 @@ public class SnakeSprite extends Sprite {
 
   public SnakeSprite() {
     super(texture());
-
-    setSize(Reference.VIEWPORT_WIDTH / 17.0f, Reference.VIEWPORT_HEIGHT / 17.0f);
-    setScale(0.8f);
+    setSize(Reference.VIEWPORT_WIDTH / 18.0f, Reference.VIEWPORT_HEIGHT / 18.0f);
     setOrigin(getWidth() / 2.0f, getHeight() / 2.0f);
-
   }
 
   private static Texture texture() {

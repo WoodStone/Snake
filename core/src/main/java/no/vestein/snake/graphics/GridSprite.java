@@ -1,9 +1,8 @@
-package no.vestein.snake;
+package no.vestein.snake.graphics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import no.vestein.snake.Reference;
 
 /**
  * Created by Vestein on 13.03.2016.
@@ -15,16 +14,14 @@ public class GridSprite extends Sprite {
   public GridSprite() {
     super(texture());
     setSize(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
-    setScale(0.8f);
     setOrigin(getWidth() / 2.0f, getHeight() / 2.0f);
-//    setPosition(Reference.VIEWPORT_WIDTH / 2.0f, Reference.VIEWPORT_HEIGHT / 2.0f);
     setPosition(Reference.VIEWPORT_WIDTH - getWidth() / 2.0f, Reference.VIEWPORT_HEIGHT - getHeight() / 2.0f);
   }
 
   private static Texture texture() {
-    Pixmap pixmap = createPixmap(544, 544);
+    Pixmap pixmap = createPixmap(544 * 4, 544 * 4);
     Texture texture = new Texture(pixmap, true);
-    texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//    texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
     return texture;
   }
@@ -34,17 +31,17 @@ public class GridSprite extends Sprite {
     pixmap.setColor(0.5f, 0.5f, 0.5f, 0.5f);
     pixmap.fill();
 
+    final int iVal = 128;
+
     pixmap.setColor(0, 0, 0, 1);
-    for (int i = 1; i < width / 32; i++) {
-      Gdx.app.debug(TAG, Integer.toString(i * 32));
-      pixmap.drawLine(i * 32, 0, i * 32, height);
+    for (int i = 1; i < width / iVal; i++) {
+      pixmap.drawLine(i * iVal, 0, i * iVal, height, 2);
     }
-    for (int i = 1; i < height / 32; i++) {
-      Gdx.app.debug(TAG, Integer.toString(i * 32));
-      pixmap.drawLine(0, i * 32, width, i * 32);
+    for (int i = 1; i < height / iVal; i++) {
+      pixmap.drawLine(0, i * iVal, width, i * iVal, 2);
     }
 
-    pixmap.drawRectangle(0, 0, width, height);
+    pixmap.drawRectangle(0, 0, width, height, 4);
 
     pixmap.setColor(1.0f, 0f, 0f, 0.5f);
     pixmap.fillCircle(width / 2, height / 2, 16);
