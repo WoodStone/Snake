@@ -20,7 +20,6 @@ public class WorldController extends InputAdapter implements Updatable {
   private Sprite[] sprites;
   private int selectedSprite;
   public CameraHelper cameraHelper;
-  public GridSprite gridSprite;
   public SnakeSprite snakeSprite;
   public Grid grid;
 
@@ -33,20 +32,17 @@ public class WorldController extends InputAdapter implements Updatable {
     cameraHelper = new CameraHelper();
     cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
     cameraHelper.setZoom(1.2f);
-    gridSprite = new GridSprite();
-    snakeSprite = new SnakeSprite();
-    grid = new Grid(17, gridSprite);
-
+    snakeSprite = new SnakeSprite(18.0f);
+    grid = new Grid(17);
     grid.addSprite("snake", snakeSprite);
     grid.moveSpriteToOrigin("snake");
 
-//    snakeSprite.setPosition(Reference.VIEWPORT_WIDTH - snakeSprite.getWidth() / 2.0f, Reference.VIEWPORT_HEIGHT - snakeSprite.getHeight() / 2.0f);
-    initObjects();
+//    initObjects();
   }
 
   public void update(float deltatime) {
     handleInput(deltatime);
-    updateObjects(deltatime);
+//    updateObjects(deltatime);
     cameraHelper.update(deltatime);
   }
 
@@ -102,30 +98,30 @@ public class WorldController extends InputAdapter implements Updatable {
     sprites[selectedSprite].translate(x, y);
   }
 
-  private void initObjects() {
-    sprites = new Sprite[5];
-
-    final int width = 64;
-    final int height = 64;
-    Pixmap pixmap = createProceduralPixmap(width, height);
-    Texture texture = new Texture(pixmap, true);
-    texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-    //texture.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.MipMapLinearLinear);
-
-    for (int i = 0; i < sprites.length; i++) {
-      Sprite sprite = new Sprite(texture);
-      sprite.setSize(1.0f, 1.0f);
-      sprite.setOrigin(sprite.getWidth() / 2.0f, sprite.getHeight() / 2.0f);
-
-      final float randomX = MathUtils.random(-2.0f, 2.0f);
-      final float randomY = MathUtils.random(-2.0f, 2.0f);
-      sprite.setPosition(randomX, randomY);
-
-      sprites[i] = sprite;
-    }
-
-    selectedSprite = 0;
-  }
+//  private void initObjects() {
+//    sprites = new Sprite[5];
+//
+//    final int width = 64;
+//    final int height = 64;
+//    Pixmap pixmap = createProceduralPixmap(width, height);
+//    Texture texture = new Texture(pixmap, true);
+//    texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+//    //texture.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.MipMapLinearLinear);
+//
+//    for (int i = 0; i < sprites.length; i++) {
+//      Sprite sprite = new Sprite(texture);
+//      sprite.setSize(1.0f, 1.0f);
+//      sprite.setOrigin(sprite.getWidth() / 2.0f, sprite.getHeight() / 2.0f);
+//
+//      final float randomX = MathUtils.random(-2.0f, 2.0f);
+//      final float randomY = MathUtils.random(-2.0f, 2.0f);
+//      sprite.setPosition(randomX, randomY);
+//
+//      sprites[i] = sprite;
+//    }
+//
+//    selectedSprite = 0;
+//  }
 
   private void updateObjects(final float deltaTime) {
     float rotation = sprites[selectedSprite].getRotation();
@@ -134,22 +130,22 @@ public class WorldController extends InputAdapter implements Updatable {
     sprites[selectedSprite].setRotation(rotation);
   }
 
-  private Pixmap createProceduralPixmap(final int width, final int height) {
-    Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-    pixmap.setColor(1, 0, 0, 0.5f);
-    pixmap.fill();
-
-    pixmap.setColor(1, 1, 0, 1);
-    pixmap.drawLine(0, 0, width, height);
-    pixmap.drawLine(width, 0, 0, height);
-
-    pixmap.setColor(0, 1, 1, 1);
-    pixmap.drawRectangle(0, 0, width, height);
-    return pixmap;
-  }
-
-  public Sprite[] getSprites() {
-    return sprites;
-  }
-
+//  private Pixmap createProceduralPixmap(final int width, final int height) {
+//    Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+//    pixmap.setColor(1, 0, 0, 0.5f);
+//    pixmap.fill();
+//
+//    pixmap.setColor(1, 1, 0, 1);
+//    pixmap.drawLine(0, 0, width, height);
+//    pixmap.drawLine(width, 0, 0, height);
+//
+//    pixmap.setColor(0, 1, 1, 1);
+//    pixmap.drawRectangle(0, 0, width, height);
+//    return pixmap;
+//  }
+//
+//  public Sprite[] getSprites() {
+//    return sprites;
+//  }
+//
 }

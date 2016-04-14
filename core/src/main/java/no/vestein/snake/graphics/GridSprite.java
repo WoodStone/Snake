@@ -1,8 +1,14 @@
 package no.vestein.snake.graphics;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import no.vestein.snake.Reference;
+
+import static no.vestein.snake.Reference.*;
 
 /**
  * Created by Vestein on 13.03.2016.
@@ -22,6 +28,11 @@ public class GridSprite extends Sprite {
     Pixmap pixmap = createPixmap(544 * 4, 544 * 4);
     Texture texture = new Texture(pixmap, true);
 //    texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+    if (Gdx.app.getType() == Application.ApplicationType.WebGL) {
+      texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+    } else {
+      texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+    }
 
     return texture;
   }
