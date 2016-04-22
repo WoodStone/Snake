@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import no.vestein.snake.*;
 import no.vestein.snake.graphics.GridSprite;
 import no.vestein.snake.graphics.SnakeSprite;
+import no.vestein.snake.input.InputController;
 
 /**
  * Created by Vestein on 12.03.2016.
@@ -19,6 +20,7 @@ public class WorldController extends InputAdapter implements Updatable {
   private static final String TAG = WorldController.class.getName();
   private Sprite[] sprites;
   private int selectedSprite;
+  private InputController inputController;
   public CameraHelper cameraHelper;
   public SnakeSprite snakeSprite;
   public Grid grid;
@@ -28,7 +30,8 @@ public class WorldController extends InputAdapter implements Updatable {
   }
 
   private void init() {
-    Gdx.input.setInputProcessor(this);
+    inputController = new InputController();
+    Gdx.input.setInputProcessor(inputController);
     cameraHelper = new CameraHelper();
     cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
     cameraHelper.setZoom(1.2f);
@@ -37,6 +40,7 @@ public class WorldController extends InputAdapter implements Updatable {
     grid.addSprite("snake", snakeSprite);
     grid.moveSpriteToOrigin("snake");
 
+    initInput();
 //    initObjects();
   }
 
@@ -44,6 +48,19 @@ public class WorldController extends InputAdapter implements Updatable {
     handleInput(deltatime);
 //    updateObjects(deltatime);
     cameraHelper.update(deltatime);
+  }
+
+  private void initInput() {
+    //Snake
+    inputController.registerInput(Input.Keys.A, () -> grid.moveSpriteLeft("snake"));
+    inputController.registerInput(Input.Keys.D, () -> grid.moveSpriteRight("snake"));
+    inputController.registerInput(Input.Keys.W, () -> grid.moveSpriteUp("snake"));
+    inputController.registerInput(Input.Keys.S, () -> grid.moveSpriteDown("snake"));
+
+    //Debug
+    inputController.registerInput(Input.Keys.R, this::init);
+    inputController.registerInput(Input.Keys.SPACE, () ->
+            Gdx.app.debug(TAG, snakeSprite.getX() + ":" + snakeSprite.getY()));
   }
 
   @Override
