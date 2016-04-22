@@ -15,7 +15,7 @@ import no.vestein.snake.input.InputController;
 /**
  * Created by Vestein on 12.03.2016.
  */
-public class WorldController extends InputAdapter implements Updatable {
+public class WorldController implements Updatable {
 
   private static final String TAG = WorldController.class.getName();
   private Sprite[] sprites;
@@ -45,7 +45,6 @@ public class WorldController extends InputAdapter implements Updatable {
   }
 
   public void update(float deltatime) {
-    handleInput(deltatime);
 //    updateObjects(deltatime);
     cameraHelper.update(deltatime);
   }
@@ -61,54 +60,6 @@ public class WorldController extends InputAdapter implements Updatable {
     inputController.registerInput(Input.Keys.R, this::init);
     inputController.registerInput(Input.Keys.SPACE, () ->
             Gdx.app.debug(TAG, snakeSprite.getX() + ":" + snakeSprite.getY()));
-  }
-
-  @Override
-  public boolean keyDown(int keycode) {
-    if (keycode == Input.Keys.R) {
-      init();
-      Gdx.app.debug(TAG, "Game world resetted.");
-    } else if (keycode == Input.Keys.SPACE) {
-//      selectedSprite = (selectedSprite + 1) % sprites.length;
-//
-//      if (cameraHelper.hastarget()) {
-//        cameraHelper.setTarget(sprites[selectedSprite]);
-//      }
-//
-//      Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
-      Gdx.app.debug(TAG, snakeSprite.getX() + ":" + snakeSprite.getY());
-    } else if (keycode == Input.Keys.ENTER) {
-//      cameraHelper.setTarget(cameraHelper.hastarget() ? null : sprites[selectedSprite]);
-//      Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hastarget());
-      Gdx.app.debug(TAG, snakeSprite.getWidth() + ".." + snakeSprite.getHeight());
-    } else if (keycode == Input.Keys.A) {
-//      snakeSprite.translateX(-snakeSprite.getWidth());
-//      snakeSprite.setX(snakeSprite.getX() - 32.0f / 17.0f);
-      grid.moveSpriteLeft("snake");
-    } else if (keycode == Input.Keys.D) {
-      grid.moveSpriteRight("snake");
-    } else if (keycode == Input.Keys.W) {
-      grid.moveSpriteUp("snake");
-    } else if (keycode == Input.Keys.S) {
-      grid.moveSpriteDown("snake");
-    }
-    return false;
-  }
-
-  private void handleInput(final float deltaTime) {
-//    final float moveSpeed = 5 * deltaTime;
-//    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-//      moveSelectedSprite(-moveSpeed, 0);
-//    }
-//    if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-//      moveSelectedSprite(moveSpeed, 0);
-//    }
-//    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-//      moveSelectedSprite(0, moveSpeed);
-//    }
-//    if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-//      moveSelectedSprite(0, -moveSpeed);
-//    }
   }
 
   private void moveSelectedSprite(final float x, final float y) {
