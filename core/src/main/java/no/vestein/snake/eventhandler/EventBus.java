@@ -33,7 +33,23 @@ public class EventBus {
     }
   }
 
-  //TODO make new unregister method
+  public void unregister(final Object object) {
+    try {
+      for (final Method method: object.getClass().getMethods()) {
+        if (method.isAnnotationPresent(SubToEvent.class)) {
+          final Class<?>[] params = method.getParameterTypes();
+          if (params.length == 1) {
+            final Class<?> argClass = params[0];
+            if (Event.class.isAssignableFrom(argClass)) {
+              Event.getListenerList(argClass.asSubclass(Event.class)).unregister(object);
+            }
+          }
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   public void post(final Event event) {
     final Map<Object, Method> listenerMap = event.getListenerList().getListeners();
