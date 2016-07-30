@@ -60,7 +60,6 @@ public class EventBus {
         method.invoke(object, event);
       } catch (Exception e) {
         e.printStackTrace();
-        //TODO exception method invoke
       }
     }
   }
