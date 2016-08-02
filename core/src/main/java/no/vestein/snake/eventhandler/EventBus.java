@@ -2,13 +2,24 @@ package no.vestein.snake.eventhandler;
 
 import no.vestein.snake.eventhandler.events.Event;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.HashMap;
 
 public class EventBus {
 
   public EventBus() {
 
+  }
+
+  public void dispose() {
+    try {
+      Field field = Event.class.getDeclaredField("classListenerMap");
+      field.setAccessible(true);
+      field.set(null, new HashMap<>());
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
   }
 
   public void register(final Object object) {
@@ -19,7 +30,8 @@ public class EventBus {
           if (params.length == 1) {
             final Class<?> argClass = params[0];
             if (Event.class.isAssignableFrom(argClass)) {
-              Event.getListenerList(argClass.asSubclass(Event.class)).register(object, method);
+              final Listener listener = new Listener(object, method);
+              Event.getListenerList(argClass.asSubclass(Event.class)).register(listener);
             } else {
               throw new IllegalArgumentException("Argument is not a subclass of Event");
             }
@@ -41,7 +53,8 @@ public class EventBus {
           if (params.length == 1) {
             final Class<?> argClass = params[0];
             if (Event.class.isAssignableFrom(argClass)) {
-              Event.getListenerList(argClass.asSubclass(Event.class)).unregister(object);
+              final Listener listener = new Listener(object, method);
+              Event.getListenerList(argClass.asSubclass(Event.class)).unregister(listener);
             }
           }
         }
@@ -52,12 +65,9 @@ public class EventBus {
   }
 
   public void post(final Event event) {
-    final Map<Object, Method> listenerMap = event.getListenerList().getListeners();
-    for (Map.Entry<Object, Method> entry : listenerMap.entrySet()) {
-      final Object object = entry.getKey();
-      final Method method = entry.getValue();
+    for (Listener listener : event.getListenerList()) {
       try {
-        method.invoke(object, event);
+        listener.METHOD.invoke(listener.OBJECT, event);
       } catch (Exception e) {
         e.printStackTrace();
       }
