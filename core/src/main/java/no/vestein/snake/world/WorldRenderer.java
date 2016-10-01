@@ -54,22 +54,9 @@ public class WorldRenderer implements Disposable {
 
   private void renderObjects() {
     worldController.cameraHelper.applyTo(camera);
-//    worldController.grid.render(camera);
-//    batch.setProjectionMatrix(camera.combined);
-//    batch.begin();
 
     renderingRegistry.renderEntity(worldController.grid, camera, batch);
     renderingRegistry.renderEntity(worldController.circleEntity, camera, batch);
-
-//    worldController.circleEntity.draw(batch);
-//    batch.end();
-
-//    Gdx.gl20.glLineWidth(5);
-//    shapeRenderer.setProjectionMatrix(camera.combined);
-//    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//    shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-//    shapeRenderer.rect(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT, 10f, 10f);
-//    shapeRenderer.end();
 
   }
 
