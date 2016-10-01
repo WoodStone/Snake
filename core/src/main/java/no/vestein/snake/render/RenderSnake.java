@@ -2,22 +2,22 @@ package no.vestein.snake.render;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import no.vestein.snake.entities.player.SnakeCore;
+import no.vestein.snake.entities.CircleEntity;
 import no.vestein.snake.graphics.SnakeSprite;
 
 /**
  * Created by Vestein on 25.04.2016.
  */
-public class RenderSnake extends EntityRenderer<SnakeCore> {
+public class RenderSnake extends EntityRenderer<CircleEntity> {
 
   private final SnakeSprite sprite = new SnakeSprite(18f);
 
   public RenderSnake() {
-    super(SnakeCore.class);
+    super(CircleEntity.class);
   }
 
   @Override
-  public void renderEntity(SnakeCore entity, Camera camera, Batch batch) {
+  public void renderEntity(CircleEntity entity, Camera camera, Batch batch) {
     batch.setProjectionMatrix(camera.combined);
     batch.begin();
 

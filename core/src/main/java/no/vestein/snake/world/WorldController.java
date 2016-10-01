@@ -2,13 +2,11 @@ package no.vestein.snake.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import no.vestein.snake.*;
-import no.vestein.snake.graphics.GridSprite;
+import no.vestein.snake.entities.CircleEntity;
+import no.vestein.snake.entities.Grid;
+import no.vestein.snake.entities.GridNew;
 import no.vestein.snake.graphics.SnakeSprite;
 import no.vestein.snake.input.InputController;
 
@@ -22,8 +20,8 @@ public class WorldController implements Updatable {
   private int selectedSprite;
   private InputController inputController;
   public CameraHelper cameraHelper;
-  public SnakeSprite snakeSprite;
-  public Grid grid;
+  public CircleEntity circleEntity;
+  public GridNew grid;
 
   public WorldController() {
     init();
@@ -35,11 +33,13 @@ public class WorldController implements Updatable {
     cameraHelper = new CameraHelper();
     cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
     cameraHelper.setZoom(1.2f);
-    snakeSprite = new SnakeSprite(18.0f);
-    grid = new Grid(17);
-    grid.addSprite("snake", snakeSprite);
-    grid.moveSpriteToOrigin("snake");
-
+    circleEntity = new CircleEntity();
+//    grid = new Grid(17);
+//    grid.addSprite("snake", circleEntity);
+//    grid.moveSpriteToOrigin("snake");
+    grid = new GridNew(11);
+    grid.addEntity("circle", circleEntity);
+    grid.moveEntityToOrigin("circle");
     initInput();
 //    initObjects();
   }
@@ -51,15 +51,15 @@ public class WorldController implements Updatable {
 
   private void initInput() {
     //Snake
-    inputController.registerInput(Input.Keys.A, () -> grid.moveSpriteLeft("snake"));
+    /*inputController.registerInput(Input.Keys.A, () -> grid.moveSpriteLeft("snake"));
     inputController.registerInput(Input.Keys.D, () -> grid.moveSpriteRight("snake"));
     inputController.registerInput(Input.Keys.W, () -> grid.moveSpriteUp("snake"));
-    inputController.registerInput(Input.Keys.S, () -> grid.moveSpriteDown("snake"));
+    inputController.registerInput(Input.Keys.S, () -> grid.moveSpriteDown("snake"));*/
 
     //Debug
     inputController.registerInput(Input.Keys.R, this::init);
-    inputController.registerInput(Input.Keys.SPACE, () ->
-            Gdx.app.debug(TAG, snakeSprite.getX() + ":" + snakeSprite.getY()));
+//    inputController.registerInput(Input.Keys.SPACE, () ->
+//            Gdx.app.debug(TAG, circleEntity.getX() + ":" + circleEntity.getY()));
   }
 
   private void moveSelectedSprite(final float x, final float y) {

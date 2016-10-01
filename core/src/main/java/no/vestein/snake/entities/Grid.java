@@ -84,7 +84,7 @@ public class Grid extends Entity implements Updatable {
 
   public void moveSpriteToOrigin(String key) {
     Sprite sprite = sprites.get(key);
-    sprite.setPosition(origin.x - sprite.getWidth() / 2, origin.y - sprite.getHeight() / 2);
+//    sprite.setPosition(origin.x - sprite.getWidth() / 2, origin.y - sprite.getHeight() / 2);
   }
 
   public boolean moveSpriteLeft(String key) {
