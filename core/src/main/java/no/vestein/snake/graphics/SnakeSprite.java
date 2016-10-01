@@ -14,7 +14,6 @@ public class SnakeSprite extends Sprite {
   public SnakeSprite(final float sizeModifier) {
     super(texture());
     setSize(Reference.VIEWPORT_WIDTH / sizeModifier, Reference.VIEWPORT_HEIGHT / sizeModifier);
-    setOrigin(getWidth() / 2.0f, getHeight() / 2.0f);
   }
 
   private static Texture texture() {

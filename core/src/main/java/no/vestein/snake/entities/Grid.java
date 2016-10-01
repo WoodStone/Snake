@@ -1,22 +1,18 @@
-package no.vestein.snake;
+package no.vestein.snake.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import no.vestein.snake.graphics.GridSprite;
+import no.vestein.snake.Reference;
+import no.vestein.snake.Updatable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static no.vestein.snake.Reference.*;
-
 /**
  * Created by Vestein on 12.04.2016.
  */
-public class Grid implements Updatable {
+public class Grid extends Entity implements Updatable {
 
   public final int SIZE;
 
@@ -37,37 +33,37 @@ public class Grid implements Updatable {
     max = (int) Math.floor(SIZE / 2);
     min = -max;
 
-      step = Reference.VIEWPORT_WIDTH / SIZE;
-    }
-
-  public void render(Camera camera) {
-
-    shape.setProjectionMatrix(camera.combined);
-
-    Gdx.gl.glEnable(GL20.GL_BLEND);
-    shape.begin(ShapeRenderer.ShapeType.Filled);
-    shape.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-    shape.rect(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-    shape.end();
-
-    shape.begin(ShapeRenderer.ShapeType.Line);
-    shape.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-    for (int i = 0; i < SIZE + 1; i++) {
-      final float x = VIEWPORT_WIDTH / 2 + VIEWPORT_WIDTH / SIZE * i;
-      shape.line(x, VIEWPORT_HEIGHT / 2, x, VIEWPORT_HEIGHT / 2 + VIEWPORT_HEIGHT);
-    }
-    for (int i = 0; i < SIZE + 1; i++) {
-      final float y = VIEWPORT_HEIGHT / 2 + VIEWPORT_HEIGHT / SIZE * i;
-      shape.line(VIEWPORT_HEIGHT / 2, y, VIEWPORT_HEIGHT / 2 + VIEWPORT_HEIGHT, y);
-    }
-    shape.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-    shape.line(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2 );
-    shape.end();
-
-//    Gdx.gl.glClearColor(0, 0, 0, 0);
-//    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+    step = Reference.VIEWPORT_WIDTH / SIZE;
   }
+
+//  public void render(Camera camera) {
+//
+//    shape.setProjectionMatrix(camera.combined);
+//
+//    Gdx.gl.glEnable(GL20.GL_BLEND);
+//    shape.begin(ShapeRenderer.ShapeType.Filled);
+//    shape.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+//    shape.rect(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+//    shape.end();
+//
+//    shape.begin(ShapeRenderer.ShapeType.Line);
+//    shape.setColor(0.0f, 0.0f, 0.0f, 1.0f);
+//    for (int i = 0; i < SIZE + 1; i++) {
+//      final float x = VIEWPORT_WIDTH / 2 + VIEWPORT_WIDTH / SIZE * i;
+//      shape.line(x, VIEWPORT_HEIGHT / 2, x, VIEWPORT_HEIGHT / 2 + VIEWPORT_HEIGHT);
+//    }
+//    for (int i = 0; i < SIZE + 1; i++) {
+//      final float y = VIEWPORT_HEIGHT / 2 + VIEWPORT_HEIGHT / SIZE * i;
+//      shape.line(VIEWPORT_HEIGHT / 2, y, VIEWPORT_HEIGHT / 2 + VIEWPORT_HEIGHT, y);
+//    }
+//    shape.setColor(1.0f, 0.0f, 0.0f, 1.0f);
+//    shape.line(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2 );
+//    shape.end();
+//
+////    Gdx.gl.glClearColor(0, 0, 0, 0);
+////    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//
+//  }
 
   public void addSprite(String key, Sprite sprite) {
     sprites.put(key, sprite);
@@ -80,8 +76,7 @@ public class Grid implements Updatable {
     Sprite sprite = sprites.get(key);
 
     if (newPos.x >= min && newPos.x <= max && newPos.y >= min && newPos.y <= max) {
-      sprite.setX(origin.x + step * newPos.x - sprite.getWidth() / 2);
-      sprite.setY(origin.y + step * newPos.y - sprite.getHeight() / 2);
+      sprite.setCenter(origin.x + step * newPos.x, origin.y + step * newPos.y);
       spritesPos.put(key, newPos);
     }
 
