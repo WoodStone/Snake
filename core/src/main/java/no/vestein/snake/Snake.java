@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import no.vestein.snake.eventhandler.EventBus;
 import no.vestein.snake.world.WorldController;
 import no.vestein.snake.world.WorldRenderer;
 
@@ -11,6 +12,8 @@ public class Snake extends ApplicationAdapter {
   private WorldController worldController;
   private WorldRenderer worldRenderer;
   private boolean paused;
+
+  public static EventBus EVENT_BUS = new EventBus();
 
 	@Override
 	public void create () {
