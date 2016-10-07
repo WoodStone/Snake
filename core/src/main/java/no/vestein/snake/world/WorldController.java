@@ -55,16 +55,11 @@ public class WorldController implements Updatable {
   }
 
   private void initInput() {
-    //Snake
-    /*inputController.registerInput(Input.Keys.A, () -> grid.moveSpriteLeft("snake"));
-    inputController.registerInput(Input.Keys.D, () -> grid.moveSpriteRight("snake"));
-    inputController.registerInput(Input.Keys.W, () -> grid.moveSpriteUp("snake"));
-    inputController.registerInput(Input.Keys.S, () -> grid.moveSpriteDown("snake"));*/
+    //Controlls
+    //todo input
 
     //Debug
     inputController.registerInput(Input.Keys.R, this::init);
-//    inputController.registerInput(Input.Keys.SPACE, () ->
-//            Gdx.app.debug(TAG, circleEntity.getX() + ":" + circleEntity.getY()));
   }
 
 }
