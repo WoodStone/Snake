@@ -10,6 +10,10 @@ public class Reference {
 
   public static final float VIEWPORT_WIDTH = 32.0f;
   public static final float VIEWPORT_HEIGHT = 32.0f;
+  public static final float VIEWPORT_UI_WIDTH = 800.0f;
+  public static final float VIEWPORT_UI_HEIGHT = 600.0f;
+
+  public static final String TEXTURE_ATLAS_OBJECTS = "images/something.pack";
 
   private Reference() {}
 
