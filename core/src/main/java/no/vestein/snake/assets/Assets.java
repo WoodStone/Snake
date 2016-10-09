@@ -1,10 +1,9 @@
-package no.vestein.snake;
+package no.vestein.snake.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -16,6 +15,8 @@ public class Assets implements Disposable, AssetErrorListener {
 
   public static final String TAG = Assets.class.getName();
   public static final Assets instance = new Assets();
+
+  public AssetFonts fonts;
 
   private AssetManager assetManager;
 
@@ -31,6 +32,8 @@ public class Assets implements Disposable, AssetErrorListener {
     for (String asset : assetManager.getAssetNames()) {
       Gdx.app.debug(TAG, "asset: " + asset);
     }
+
+    fonts = new AssetFonts();
   }
 
   @Override
@@ -41,5 +44,6 @@ public class Assets implements Disposable, AssetErrorListener {
   @Override
   public void dispose() {
     assetManager.dispose();
+    fonts.sourceCodeRegular.dispose();
   }
 }
