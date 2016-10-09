@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import no.vestein.snake.Snake;
 import no.vestein.snake.eventhandler.SubToEvent;
 import no.vestein.snake.eventhandler.events.Event;
+import no.vestein.snake.screens.GameScreen;
 import no.vestein.snake.world.WorldController;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
@@ -29,7 +30,7 @@ public class ScriptManager implements Script {
     chunk = globals.loadfile(scriptFilename);
     chunk.call();
 
-    Snake.EVENT_BUS.register(this);
+    GameScreen.EVENT_BUS.register(this);
   }
 
   @SubToEvent

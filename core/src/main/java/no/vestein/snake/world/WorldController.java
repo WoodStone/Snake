@@ -1,5 +1,6 @@
 package no.vestein.snake.world;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import no.vestein.snake.*;
@@ -8,6 +9,7 @@ import no.vestein.snake.entities.GridNew;
 import no.vestein.snake.input.InputController;
 import no.vestein.snake.lua.Script;
 import no.vestein.snake.lua.ScriptManager;
+import no.vestein.snake.screens.MenuScreen;
 
 /**
  * Created by Vestein on 12.03.2016.
@@ -17,12 +19,19 @@ public class WorldController implements Updatable {
   private static final String TAG = WorldController.class.getName();
   private InputController inputController;
   private ScriptManager scriptManager;
+  private Game game;
+
   public CameraHelper cameraHelper;
   public CircleEntity circleEntity;
   public GridNew grid;
 
-  public WorldController() {
+  public WorldController(Game game) {
+    this.game = game;
     init();
+  }
+
+  private void backToMenu() {
+    game.setScreen(new MenuScreen(game));
   }
 
   private void init() {
