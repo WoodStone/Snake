@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import no.vestein.snake.Reference;
 import no.vestein.snake.render.RenderGrid;
 import no.vestein.snake.render.RenderSnake;
+import no.vestein.snake.render.RenderTextBox;
 import no.vestein.snake.render.RenderingRegistry;
 
 /**
@@ -15,6 +16,7 @@ import no.vestein.snake.render.RenderingRegistry;
 public class WorldRenderer implements Disposable {
 
   private OrthographicCamera camera;
+  private OrthographicCamera camera_ui;
   private SpriteBatch batch;
   private WorldController worldController;
   private ShapeRenderer shapeRenderer;
@@ -32,11 +34,18 @@ public class WorldRenderer implements Disposable {
     camera.position.set(0, 0, 0);
     camera.update();
 
+    {
+      camera_ui = new OrthographicCamera(Reference.VIEWPORT_UI_WIDTH, Reference.VIEWPORT_UI_HEIGHT);
+      camera_ui.position.set(0, 0, 0);
+      camera_ui.update();
+    }
+
     renderingRegistry = new RenderingRegistry();
     shapeRenderer = new ShapeRenderer();
 
     renderingRegistry.registerRenderer(new RenderGrid());
     renderingRegistry.registerRenderer(new RenderSnake());
+    renderingRegistry.registerRenderer(new RenderTextBox());
   }
 
   public void render() {
@@ -55,8 +64,9 @@ public class WorldRenderer implements Disposable {
   private void renderObjects() {
     worldController.cameraHelper.applyTo(camera);
 
-    renderingRegistry.renderEntity(worldController.grid, camera, batch);
-    renderingRegistry.renderEntity(worldController.circleEntity, camera, batch);
+//    renderingRegistry.renderEntity(worldController.grid, camera, batch);
+//    renderingRegistry.renderEntity(worldController.circleEntity, camera, batch);
+    renderingRegistry.renderEntity(worldController.textBox, camera_ui, batch);
 
   }
 

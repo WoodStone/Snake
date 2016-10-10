@@ -6,9 +6,11 @@ import com.badlogic.gdx.Input;
 import no.vestein.snake.*;
 import no.vestein.snake.entities.CircleEntity;
 import no.vestein.snake.entities.GridNew;
+import no.vestein.snake.entities.TextBox;
 import no.vestein.snake.input.InputController;
 import no.vestein.snake.lua.Script;
 import no.vestein.snake.lua.ScriptManager;
+import no.vestein.snake.screens.GameScreen;
 import no.vestein.snake.screens.MenuScreen;
 
 /**
@@ -24,6 +26,7 @@ public class WorldController implements Updatable {
   public CameraHelper cameraHelper;
   public CircleEntity circleEntity;
   public GridNew grid;
+  public TextBox textBox;
 
   public WorldController(Game game) {
     this.game = game;
@@ -47,6 +50,10 @@ public class WorldController implements Updatable {
     cameraHelper = new CameraHelper();
     cameraHelper.setPosition(Reference.VIEWPORT_WIDTH, Reference.VIEWPORT_HEIGHT);
     cameraHelper.setZoom(1.2f);
+
+    textBox = new TextBox(20, 30);
+    GameScreen.EVENT_BUS.register(textBox);
+
     circleEntity = new CircleEntity();
     grid = new GridNew(11);
     grid.addEntity("circle", circleEntity);
@@ -68,7 +75,7 @@ public class WorldController implements Updatable {
     //todo input
 
     //Debug
-    inputController.registerInput(Input.Keys.R, this::init);
+    //inputController.registerInput(Input.Keys.R, this::init);
   }
 
 }

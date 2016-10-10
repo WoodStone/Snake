@@ -1,8 +1,11 @@
 package no.vestein.snake.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import no.vestein.snake.Updatable;
+import no.vestein.snake.eventhandler.events.KeyPressedEvent;
+import no.vestein.snake.screens.GameScreen;
 import no.vestein.snake.world.WorldController;
 
 import java.util.HashMap;
@@ -20,6 +23,8 @@ public class InputController extends InputAdapter implements Updatable {
 
   @Override
   public boolean keyDown(int keyCode) {
+    GameScreen.EVENT_BUS.post(new KeyPressedEvent(keyCode));
+
     if (inputMap.containsKey(keyCode)) {
       inputMap.get(keyCode).call();
     }
