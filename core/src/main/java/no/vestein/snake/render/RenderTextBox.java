@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import no.vestein.snake.Reference;
-import no.vestein.snake.assets.AssetFonts;
 import no.vestein.snake.assets.Assets;
 import no.vestein.snake.entities.TextBox;
 import no.vestein.snake.lua.LuaGlyph;
@@ -23,9 +21,15 @@ import java.util.List;
 public class RenderTextBox extends EntityRenderer<TextBox> {
 
   private ShapeRenderer shape = new ShapeRenderer();
+  private boolean tick = false;
+  private int tickInterval = 500;
+  private long lastTick;
+  private boolean debug = true
+          ;
 
   public RenderTextBox() {
     super(TextBox.class);
+    lastTick = System.currentTimeMillis();
   }
 
   @Override
@@ -33,26 +37,62 @@ public class RenderTextBox extends EntityRenderer<TextBox> {
     shape.setProjectionMatrix(camera.combined);
 
     Gdx.gl.glEnable(GL20.GL_BLEND);
-    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-    shape.begin(ShapeRenderer.ShapeType.Filled);
-    shape.setColor(0.0f, 0.5f, 0.5f, 0.5f);
-    shape.rect(-200.0f, -200.0f, 400.0f, 400.0f);
-    shape.end();
-
+    //Background
+    {
+      Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+      shape.begin(ShapeRenderer.ShapeType.Filled);
+      shape.setColor(0.0f, 0.5f, 0.5f, 0.5f);
+      shape.rect(-200.0f, -200.0f, 400.0f, 400.0f);
+      shape.end();
+    }
+    //Debug lines
+    {
+      if (debug) {
+        shape.begin(ShapeRenderer.ShapeType.Line);
+        shape.setColor(1.0f, 0.0f, 0.0f, 0.6f);
+        for (int i = 0; i < 20; i++) {
+          shape.line(-190.0f, 195.0f - i * 16, 200.0f, 195.0f - i * 16);
+        }
+        for (int i = 0; i < 30; i++) {
+          shape.line(-190.0f + i * 9.5f, 195.0f, -190.0f + i * 9.5f, -200.0f);
+        }
+        shape.end();
+      }
+    }
+    //Blinking box
+    {
+      if (tick) {
+        int x = entity.getText().getActivePos();
+        int y = entity.getText().getActiveLine();
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.setColor(0.0f, 0.0f, 0.0f, 0.4f);
+        shape.rect(-190.0f + x * 9.5f, 195.0f - y * 16, 9.5f, -16.0f);
+        shape.end();
+        if (System.currentTimeMillis() - lastTick > tickInterval) {
+          lastTick = System.currentTimeMillis();
+          tick = false;
+        }
+      } else {
+        if (System.currentTimeMillis() - lastTick > tickInterval) {
+          lastTick = System.currentTimeMillis();
+          tick = true;
+        }
+      }
+    }
     Gdx.gl.glDisable(GL20.GL_BLEND);
 
     batch.setProjectionMatrix(camera.combined);
     batch.begin();
 
-    BitmapFont font = Assets.instance.fonts.sourceCodeRegular;
-    font.getData().setScale(0.5f);
+    BitmapFont font = Assets.instance.fonts.sourceCodeRegularScale;
+//    font.getData().setScale(0.5f);
     font.setColor(Color.BLACK);
 
-    List<String> lines = entity.getText();
+    List<String> lines = entity.getTextAsList();
     for (int i = 0; i<lines.size(); i++) {
-      LuaGlyph glyph = new LuaGlyph(Assets.instance.fonts.sourceCodeRegular);
+      LuaGlyph glyph = new LuaGlyph(font);
       glyph.setText(lines.get(i));
-      glyph.setPos(-190.0f, 190.0f - i * 20.0f);
+      glyph.setPos(-190.0f, 190.0f - i * 16.0f);
       font.draw(batch, glyph, glyph.getPos().x, glyph.getPos().y);
     }
 

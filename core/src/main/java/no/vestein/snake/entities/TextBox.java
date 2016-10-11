@@ -2,6 +2,7 @@ package no.vestein.snake.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import no.vestein.snake.eventhandler.SubToEvent;
 import no.vestein.snake.eventhandler.events.KeyPressedEvent;
 
@@ -50,7 +51,11 @@ public class TextBox extends Entity {
     }
   }
 
-  public List<String> getText() {
+  public Text getText() {
+    return text;
+  }
+
+  public List<String> getTextAsList() {
     List<String> list = new ArrayList<>();
     for (int i = 0; i<lines; i++) {
       list.add(text.getLine(i));
@@ -58,13 +63,14 @@ public class TextBox extends Entity {
     return list;
   }
 
-  private class Text {
+  public class Text {
 
     private final int lines;
     private final int characters;
 
     private List<List<String>> text = new ArrayList<>();
     private int activeLine = 0;
+    private int activePos = 0;
 
     Text(final int lines, final int characters) {
       this.lines = lines;
@@ -86,11 +92,20 @@ public class TextBox extends Entity {
       return line;
     }
 
+    public int getActivePos() {
+      return activePos;
+    }
+
+    public int getActiveLine() {
+      return activeLine;
+    }
+
     public void nextLine() {
       if (activeLine == lines-1) {
         return;
       }
       activeLine++;
+      activePos = 0;
     }
 
     public void prevLine() {
@@ -98,6 +113,7 @@ public class TextBox extends Entity {
         return;
       }
       activeLine--;
+      activePos = 0;
     }
 
     public void deleteCharacter() {
@@ -107,6 +123,7 @@ public class TextBox extends Entity {
         return;
       }
       line.remove(line.size() - 1);
+      activePos--;
     }
 
     public void addSpace() {
@@ -119,6 +136,7 @@ public class TextBox extends Entity {
         return;
       }
       line.add(newChar);
+      activePos++;
     }
 
   }
