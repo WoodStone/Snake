@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import no.vestein.snake.Reference;
+import no.vestein.snake.assets.Assets;
 import no.vestein.snake.render.RenderGrid;
 import no.vestein.snake.render.RenderSnake;
 import no.vestein.snake.render.RenderTextBox;
@@ -54,6 +55,7 @@ public class WorldRenderer implements Disposable {
 
   public void resize(final int width, final int height) {
     camera.viewportWidth = (Reference.VIEWPORT_HEIGHT / height) * width;
+    Assets.instance.fonts.reload();
   }
 
   @Override

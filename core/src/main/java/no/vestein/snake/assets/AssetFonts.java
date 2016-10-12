@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector2;
 import no.vestein.snake.Reference;
+import no.vestein.snake.lua.LuaGlyph;
 
 /**
  * Created by Vestein Dahl
@@ -13,9 +15,10 @@ import no.vestein.snake.Reference;
  */
 public class AssetFonts {
 
+  private final String TAG = AssetFonts.class.getName();
   public final BitmapFont sourceCodeRegular;
   public final BitmapFont sourceCodeRegularHighRes;
-  public final BitmapFont sourceCodeRegularScale;
+  public BitmapFont sourceCodeRegularScale;
 
   public AssetFonts() {
     sourceCodeRegular = new BitmapFont(Gdx.files.internal("sourcecode.fnt"));
@@ -29,12 +32,23 @@ public class AssetFonts {
     sourceCodeRegularScale = loadFont();
   }
 
+  public void reload() {
+    sourceCodeRegularScale = loadFont();
+    Gdx.app.log(TAG, Integer.toString(Gdx.graphics.getWidth()));
+  }
+
+  public Vector2 getDim() {
+    LuaGlyph glyph = new LuaGlyph(sourceCodeRegularScale);
+    glyph.setText("A");
+    return new Vector2(glyph.width, glyph.height);
+  }
+
   private BitmapFont loadFont() {
     final float SCALE = 1.0f * Gdx.graphics.getWidth() / Reference.VIEWPORT_UI_WIDTH;
     FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("SourceCodePro-Regular.ttf"));
 
     FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    parameter.size = (int) (16 * SCALE);
+    parameter.size = (int) (24 * SCALE);
     BitmapFont font = generator.generateFont(parameter);
     font.getData().setScale(1.0f / SCALE);
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import no.vestein.snake.assets.Assets;
 import no.vestein.snake.entities.TextBox;
 import no.vestein.snake.lua.LuaGlyph;
@@ -24,12 +25,17 @@ public class RenderTextBox extends EntityRenderer<TextBox> {
   private boolean tick = false;
   private int tickInterval = 500;
   private long lastTick;
-  private boolean debug = true
-          ;
+  private boolean debug = false;
+  private final float width;
+  private final float height;
 
   public RenderTextBox() {
     super(TextBox.class);
     lastTick = System.currentTimeMillis();
+
+    final Vector2 vec = Assets.instance.fonts.getDim();
+    width = vec.x;
+    height = vec.y;
   }
 
   @Override
@@ -51,10 +57,10 @@ public class RenderTextBox extends EntityRenderer<TextBox> {
         shape.begin(ShapeRenderer.ShapeType.Line);
         shape.setColor(1.0f, 0.0f, 0.0f, 0.6f);
         for (int i = 0; i < 20; i++) {
-          shape.line(-190.0f, 195.0f - i * 16, 200.0f, 195.0f - i * 16);
+          shape.line(-190.0f, 190.0f - i * height, 200.0f, 190.0f - i * height);
         }
         for (int i = 0; i < 30; i++) {
-          shape.line(-190.0f + i * 9.5f, 195.0f, -190.0f + i * 9.5f, -200.0f);
+          shape.line(-190.0f + i * width, 190.0f, -190.0f + i * width, -200.0f);
         }
         shape.end();
       }
@@ -66,7 +72,7 @@ public class RenderTextBox extends EntityRenderer<TextBox> {
         int y = entity.getText().getActiveLine();
         shape.begin(ShapeRenderer.ShapeType.Filled);
         shape.setColor(0.0f, 0.0f, 0.0f, 0.4f);
-        shape.rect(-190.0f + x * 9.5f, 195.0f - y * 16, 9.5f, -16.0f);
+        shape.rect(-190.0f + x * width, 190.0f - y * height + 2.0f, width, -height -2.0f);
         shape.end();
         if (System.currentTimeMillis() - lastTick > tickInterval) {
           lastTick = System.currentTimeMillis();
@@ -92,7 +98,7 @@ public class RenderTextBox extends EntityRenderer<TextBox> {
     for (int i = 0; i<lines.size(); i++) {
       LuaGlyph glyph = new LuaGlyph(font);
       glyph.setText(lines.get(i));
-      glyph.setPos(-190.0f, 190.0f - i * 16.0f);
+      glyph.setPos(-190.0f, 190.0f - i * height);
       font.draw(batch, glyph, glyph.getPos().x, glyph.getPos().y);
     }
 
